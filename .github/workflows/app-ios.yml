@@ -11,6 +11,7 @@ jobs:
     runs-on: macos-13
     name: Build iOS app
     steps:
+      - uses: actions/checkout@v4
       - uses: ./app.yml
 
       - name: Install the Apple certificate and provisioning profile
