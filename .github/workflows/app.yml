@@ -4,10 +4,7 @@
 name: Build Web App
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   sub-task:
