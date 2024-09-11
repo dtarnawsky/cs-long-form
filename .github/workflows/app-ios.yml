@@ -9,15 +9,10 @@ on:
 jobs:
   build:
     runs-on: macos-13
-    name: Build iOS App
+    name: Build iOS app
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-
-      - name: Build Web App
-        uses: ./.github/actions/build-web-app
-
-
 
       - name: Install the Apple certificate and provisioning profile
         env:
@@ -53,6 +48,17 @@ jobs:
         with:
           xcode-version: latest
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+         node-version: 18.x  
+
+      - name: Install app dependencies
+        run: npm install
+
+      - name: Build project app
+        run: npm run build
+
       - name: Capacitor sync
         run: npx cap sync
 
@@ -72,12 +78,12 @@ jobs:
          mkdir ./private_keys
          echo "${{ secrets.APP_STORE_CONNECT_P8 }}" > ./private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8
 
-      # - name: Send to TestFlight
-      #   run: xcrun altool --upload-app --file output/App.ipa --type ios --apiKey ${{ secrets.APP_STORE_CONNECT_KEY_ID }} --apiIssuer ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} --notes "${{ github.event.pull_request.title }}"
+      - name: Send to TestFlight
+        run: xcrun altool --upload-app --file output/App.ipa --type ios --apiKey ${{ secrets.APP_STORE_CONNECT_KEY_ID }} --apiIssuer ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} --notes "${{ github.event.pull_request.title }}"
 
-      - name: Upload release bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-ios
-          path: output/
-          retention-days: 60
+      #- name: Upload release bundle
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: app-ios
+      #    path: output/
+      #    retention-days: 60
