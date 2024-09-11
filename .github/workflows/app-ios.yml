@@ -7,12 +7,14 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-web:      
+  build-web:     
+    runs-on: macos-13
+    name: Build Web App
     uses: ./.github/workflows/app.yml
-    
+
   build:
     runs-on: macos-13
-    name: Build iOS app
+    name: Build iOS App
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
