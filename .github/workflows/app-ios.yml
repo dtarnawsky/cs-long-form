@@ -7,6 +7,9 @@ on:
     branches: [ "main" ]
 
 jobs:
+  build-web:      
+    uses: ./.github/workflows/app.yml
+    
   build:
     runs-on: macos-13
     name: Build iOS app
@@ -14,8 +17,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Build App
-        uses: dtarnawsky/cs-longform/.github/workflows/app.yml@main
+
 
       - name: Install the Apple certificate and provisioning profile
         env:
