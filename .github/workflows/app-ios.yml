@@ -14,7 +14,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-        name: Build Web App
+      - name: Build Web App
         uses: ./.github/actions/build-web-app
 
 
