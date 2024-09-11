@@ -11,8 +11,11 @@ jobs:
     runs-on: macos-13
     name: Build iOS app
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/app.yml
+      - name: Checkout source
+        uses: actions/checkout@v4
+        
+      - name: Build App
+        uses: ./.github/workflows/app.yml
 
       - name: Install the Apple certificate and provisioning profile
         env:
